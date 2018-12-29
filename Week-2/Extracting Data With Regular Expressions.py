@@ -18,7 +18,7 @@ for line in handle:
 	
 	for num in f:
 		
-		if num >= [0]:
+		if int(num) >= 0:
 			
 			count = count + 1
 			sum = sum + int(num)
