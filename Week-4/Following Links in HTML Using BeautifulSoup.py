@@ -5,24 +5,34 @@ In this assignment you will write a Python program that expands on http://www.py
 
 We provide two files for this assignment. One is a sample file where we give you the name for your testing and the other is the actual data you need to process for the assignment
 
-Sample problem: Start at http://python-data.dr-chuck.net/known_by_Fikret.html 
+Sample problem: Start at http://python-data.dr-chuck.net/known_by_Fikret.html
 Find the link at position 3 (the first name is 1). Follow that link. Repeat this process 4 times. The answer is the last name that you retrieve.
-Sequence of names: Fikret Montgomery Mhairade Butchi Anayah 
+Sequence of names: Fikret Montgomery Mhairade Butchi Anayah
 Last name in sequence: Anayah
-Actual problem: Start at: http://python-data.dr-chuck.net/known_by_Blanka.html 
+Actual problem: Start at: http://python-data.dr-chuck.net/known_by_Blanka.html
 Find the link at position 18 (the first name is 1). Follow that link. Repeat this process 7 times. The answer is the last name that you retrieve.
 Hint: The first character of the name of the last page that you will load is: L
 '''
 
-import urllib
+import urllib.request
+import urllib.parse
+import urllib.error
 from bs4 import BeautifulSoup
-url = raw_input('Enter Url: ')
-count = int(raw_input("Enter count: "))
-position = int(raw_input("Enter position:"))
-for i in range(count):
-    html = urllib.urlopen(url).read()
-    soup = BeautifulSoup(html)
+import ssl
 
+# Ignore SSL certificate errors
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
+
+url = input('Enter URL: ')
+count = int(input('Enter count: '))
+position = int(input('Enter position: '))
+
+for i in range(count):
+    html = urllib.request.urlopen(url, context=ctx).read()
+    soup = BeautifulSoup(html, 'html.parser')
+    # Retrieve all of the anchor tags
     tags = soup('a')
     s = []
     t = []
@@ -31,8 +41,7 @@ for i in range(count):
         s.append(x)
         y = tag.text
         t.append(y)
-    
-    print s[position-1]
-    print t[position-1]
-    url = s[position-1]
 
+    print(s[position - 1])
+    print(t[position - 1])
+    url = s[position - 1]

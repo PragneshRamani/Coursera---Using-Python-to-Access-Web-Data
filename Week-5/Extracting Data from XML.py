@@ -7,21 +7,26 @@ Sample data: http://python-data.dr-chuck.net/comments_42.xml (Sum=2553)
 Actual data: http://python-data.dr-chuck.net/comments_353536.xml (Sum ends with 90)
 You do not need to save these files to your folder since your program will read the data directly from the URL. Note: Each student will have a distinct data url for the assignment - so only use your own data url for analysis.
 '''
-import urllib
+import urllib.request
+import urllib.parse
+import urllib.error
 import xml.etree.ElementTree as ET
+import ssl
 
-url = raw_input("Enter - ")
-uh = urllib.urlopen(url)
-data = uh.read()
+url = input("Enter location: ")
+urlHandle = urllib.request.urlopen(url)
+data = urlHandle.read()
 
 tree = ET.fromstring(data)
-results = tree.findall('comments/comment')
-count =0
-sum=0
-for item in results:
-    x = int(item.find('count').text)
-    count =count+1
-    sum = sum+x
+pData = tree.findall('comments/comment')
 
-print "Count : ",count
-print "Sum : ",sum
+count = 0
+sum = 0
+
+for item in pData:
+    temp = int(item.find('count').text)  # get the data in count element
+    count = count + 1
+    sum = sum + temp
+
+print("Count", count)
+print("Sum", sum)

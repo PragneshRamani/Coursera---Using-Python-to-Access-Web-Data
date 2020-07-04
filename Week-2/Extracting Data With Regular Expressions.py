@@ -1,26 +1,20 @@
 '''
-In this assignment you will read through and parse a file with text and numbers.
-You will extractall the numbers in the file and compute the sum of the numbers.
+In this assignment you will read through and parse a file
+with text and numbers. You will extract all the numbers
+in the file and compute the sum of the numbers.
 '''
 import re
 
-fname = raw_input('Enter File name :')
+try:
+    fileHandle = open('./regex_sum_706599.txt')
+except:
+    print("Error when opening file")
 
-handle = open(fname)
+text = fileHandle.read()
+listNumbers = re.findall('[0-9]+', text)
 
-sum=0
+sum = 0
+for strNumber in listNumbers:
+    sum = sum + int(strNumber)
 
-count = 0
-
-for line in handle:
-	
-	f = re.findall('[0-9]+',line)
-	
-	for num in f:
-		
-		if num >= [0]:
-			
-			count = count + 1
-			sum = sum + int(num)
-		
-print 'There are',count,'values with a sum =',sum
+print(sum)
