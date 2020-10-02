@@ -23,4 +23,4 @@ for line in handle:
 			count = count + 1
 			sum = sum + int(num)
 		
-print 'There are',count,'values with a sum =',sum
+print('There are',count,'values with a sum =',sum)
