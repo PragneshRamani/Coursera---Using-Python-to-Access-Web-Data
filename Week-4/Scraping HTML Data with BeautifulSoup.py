@@ -16,12 +16,14 @@ You do not need to save these files to your folder since your program
 will read the data directly from the URL. Note: Each student will have a
 distinct data url for the assignment - so only use your own data url for analysis.
 '''
+
 import urllib
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
 url = raw_input('Enter - ')
 
-html = urllib.urlopen(url).read()
+html = urlopen(url).read()
 soup = BeautifulSoup(html)
 tag = soup("span")
 count=0
@@ -30,5 +32,5 @@ for i in tag:
 	x=int(i.text)
 	count+=1
 	sum = sum + x
-print count
-print sum
+print (count)
+print (sum)
